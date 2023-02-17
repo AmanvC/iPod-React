@@ -13,17 +13,20 @@ class App extends React.Component{
     super();
     this.menu = false;
     this.state = {
+      //Apps List
       apps: [ "Music", "Games", "Images", "Settings" ],
       display: "Menu"
     }
   }
 
+  //On clicking menu, setState of display to menu and load menu on the screen
   menuClick = () => {
     this.setState({
       display: "Menu"
     })
   }
 
+    //On clicking menu, setState of display to appName and load app on the screen
   appOpen = () => {
     const activeElement = document.querySelector('.active');
     if(activeElement){
@@ -33,7 +36,9 @@ class App extends React.Component{
     }
   }
 
+  // gesture wheel 
   rotateEvent = () => {
+    //if the app loaded is not menu, we don't need the gesture
     if(this.state.display !== "Menu"){
       return;
     }
@@ -49,26 +54,36 @@ class App extends React.Component{
       if(current === 0){
         previous = 0;
       }else{
+        //if distance from origin is increasing, direction would be clockwise
         if(previous <= current){
           clockwise = true;
-        }else{
+        }else{ //else anticlockwise
           clockwise = false;
         }
       }
       
+      // if direction is clockwise and distance between origin and last point >= 40
       if(clockwise && current - previous >= 40){
+        //check if value of index equals array length
         if(index === options.length){
           index = 0;
         }
+        //add active class
         options[index].classList.add('active');
+        //update previous point value
         previous = current;
+        // if index === 0 remove active class from last index
         if(index === 0){
           options[options.length-1].classList.remove('active');
         }else{
+          //else remove active class from previous index
           options[index-1].classList.remove('active')
         }
+        //increase index value
         index++;
-      }else if(!clockwise && previous - current >= 40){
+      }
+      //same for anticlockwise direction
+      else if(!clockwise && previous - current >= 40){
         index--;
         if(index === -1){
           index = options.length-1;
@@ -84,10 +99,12 @@ class App extends React.Component{
     })
   }
 
+  // on component update, start the gesture
   componentDidUpdate(){
     this.rotateEvent();
   }
 
+  // on component mount, start the gesture
   componentDidMount(){
     this.rotateEvent();
   }
@@ -98,6 +115,7 @@ class App extends React.Component{
       <div className="container" >
         <div className="ipod">
           <div className="screen">
+            {/* render apps on screen according to the option selected */}
           { this.state.display === "Menu" && <Menu apps={apps}/>}
           { this.state.display === "Music" && <Music />}
           { this.state.display === "Games" && <Games />}
@@ -114,7 +132,7 @@ class App extends React.Component{
           </div>
         </div>
 
-
+        {/* Copy styles to create a shadow */}
         <div className="ipod">
           <div className="screen">
 
