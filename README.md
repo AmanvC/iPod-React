@@ -1,7 +1,7 @@
 # iPod-React
 A simple react application involving iPod like gestures.
 
-#Steps
+# Steps
 1. Install Nodejs and Node Package Manager
 2. In the home folder, open terminal and run -> npm install
 3. All the project dependencies will get installed.
